@@ -27,7 +27,7 @@ The pipeline works as described below:
 7. The recover of deleted and non-predicted loci with Exonerate mapping of orthologous genes (input: the multifiltered CodingQuarry gene prediction file and the fasta file of protein sequences from related species)  
 <br />
 
-¹In the paper we show that subsampled BAM alignments generate better results than the large whole files in the Cufflinks transcripts assembly. For our organism models, the optimal subsampled library size was of 7.5 million reads for each RNA-Seq replicate, but the optimal size may differ for other organisms. If you want to subsample your bam files before using the pipeline, see https://broadinstitute.github.io/picard/ for DownsampleSam tool installation and usage. Keep in mind that DownsampleSam subsamples libraries based on a probability, so the probability value required to generate a 7.5 million reads subsampling will depend on your original library size.  
+¹In the paper we show that subsampled BAM alignments generate better results than the large whole files in the Cufflinks transcripts assembly. For our organism models, the optimal subsampled library size was of 7.5 million reads for each RNA-Seq replicate, but the optimal size may differ for other organisms. If you want to subsample your bam files before using the pipeline, see https://broadinstitute.github.io/picard/ for *DownsampleSam* tool installation and usage. Keep in mind that DownsampleSam subsamples libraries based on a probability, so the probability value required to generate a 7.5 million reads subsampling will depend on your original library size.  
 <br />
 
 ### What does C3Q requires?
