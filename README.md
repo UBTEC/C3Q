@@ -7,7 +7,7 @@ By Patrícia A. G. Ferrareze and Rodrigo S. A. Streit
 
 
 ### What does C3Q pipeline do?  
-The C3Q pipeline is a Cufflinks and CodingQuarry based gene prediction pipeline optimized for intron rich fungal genomes, as Cryptococcus species. The C3Q pipeline was developed and tested with *C. neoformans* H99 and *C. deneoformans* JEC21 genomes, using RNA-Seq as the primary source of information for the gene prediction. 
+The C3Q pipeline is a Cufflinks and CodingQuarry based gene prediction pipeline optimized for intron rich fungal genomes, as *Cryptococcus* species. The C3Q pipeline was developed and tested with *C. neoformans* H99 and *C. deneoformans* JEC21 genomes, using RNA-Seq as the primary source of information for the gene prediction. 
 The C3Q pipeline was used to gene prediction in *C. deuterogattii* R265. The selection of parameters and results are described in the paper: 
 
 **Application of an optimized annotation pipeline to the _Cryptococcus deuterogattii_ genome reveals dynamic primary metabolic gene clusters and genomic impact of RNAi loss**  
