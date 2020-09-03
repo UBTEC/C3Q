@@ -39,7 +39,7 @@ The tested versions of the dependencies and their repositories are listed bellow
 - [Cufflinks v2.2.1](http://cole-trapnell-lab.github.io/cufflinks/)  
 - [CodingQuarry v2.0](https://sourceforge.net/projects/codingquarry/)  
 - [GFFcompare v0.10.1 and v0.10.6](https://github.com/gpertea/gffcompare)  
-- [HTSeq-count of the 'HTSeq' framework, v0.12.4](https://htseq.readthedocs.io/en/master/index.html)  
+- [HTSeq-count of the 'HTSeq' framework v0.12.4](https://htseq.readthedocs.io/en/master/index.html)  
 - [Exonerate v2.3.0 with GFF3 support](https://github.com/hotdogee/exonerate-gff3)  
 
 In the exception of Exonerate², all the dependencies are available in Bioconda channel for Conda-based installation.  
