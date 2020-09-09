@@ -88,8 +88,11 @@ def codingquarry(pattern, p):
 		error_handler(error,pattern,linetrack)
 	with open("out/PredictedPass.gff3","r") as cdqfile, open("CorrectedPredictedPass.gff3","w") as newgff:
 		for line in cdqfile:
-			line = line.replace("Name=;","").strip()
-			print(line,file=newgff)
+			if not line.strip():
+				pass
+			else:
+				line = line.replace("Name=;","").strip()
+				print(line,file=newgff)
 
 def gffcompare(filelist,outname,pattern):
 	print("Executing GFFcompare")
@@ -105,38 +108,47 @@ def small_seq_filter():
 	filter_list = []
 	with open("ref.CorrectedPredictedPass.gff3.tmap","r") as infile:
 		for line in infile:
-			line = line.strip().split()
-			if line[0] == "ref_gene_id":
+			if not line.strip():
 				pass
-			elif int(line[5]) > 1:
-				if int(line[11]) > 150:
-					filter_list.append(line[0])
-				else:
-					pass
-			elif int(line[5]) == 1:
-				if int(line[11]) > 300:
-					filter_list.append(line[0])
-				else:
-					pass
 			else:
-				pass
+				line = line.strip().split()
+				if line[0] == "ref_gene_id":
+					pass
+				elif int(line[5]) > 1:
+					if int(line[11]) > 150:
+						filter_list.append(line[0])
+					else:
+						pass
+				elif int(line[5]) == 1:
+					if int(line[11]) > 300:
+						filter_list.append(line[0])
+					else:
+						pass
+				else:
+					pass
 	with open("CorrectedPredictedPass.gff3","r") as oldgff, open("PredictedPass_seq-filter.gff3", "w") as newgff:
 		for line in oldgff:
-			for item in filter_list:
-				if item in line:
-					print(line.strip(), file=newgff)
-				else:
-					pass
+			if not line.strip():
+				pass
+			else:
+				for item in filter_list:
+					if item in line:
+						print(line.strip(), file=newgff)
+					else:
+						pass
 
 def htseq(libfile,strandness,pattern):
 	print("Executing HTseq-count")
 	libraries = ""
 	with open(libfile, "r") as liblist:
 		for line in liblist:
-			if libraries == "":
-				libraries = libraries+line.strip()
+			if not line.strip():
+				pass
 			else:
-				libraries = libraries+" "+line.strip()
+				if libraries == "":
+					libraries = libraries+line.strip()
+				else:
+					libraries = libraries+" "+line.strip()
 	try:
 		with open("error_log.txt","w") as error_log:
 			subprocess.check_call("htseq-count -s "+strandness+" -f bam -r pos -t CDS -i ID "+libraries+" PredictedPass_seq-filter.gff3 > htseq_out.txt",shell=True,stderr=error_log,stdout=subprocess.DEVNULL)
@@ -149,24 +161,30 @@ def read_count_filter():
 	list_pass = []
 	with open("htseq_out.txt", "r") as htin:
 		for line in htin:
-			line = line.strip().split()
-			if "TCONS" in line[0]:
-				list_pass.append(line[0].replace("CDS:",""))
+			if not line.strip():
+				pass
 			else:
-				num_reads = 0
-				for value in range(1,len(line)):
-					num_reads += int(line[value])
-				if num_reads == 0:
-					pass
-				else:
+				line = line.strip().split()
+				if "TCONS" in line[0]:
 					list_pass.append(line[0].replace("CDS:",""))
+				else:
+					num_reads = 0
+					for value in range(1,len(line)):
+						num_reads += int(line[value])
+					if num_reads == 0:
+						pass
+					else:
+						list_pass.append(line[0].replace("CDS:",""))
 	with open("PredictedPass_seq-filter.gff3","r") as gffin, open("PredictedPass_seq-filter-2.gff3", "w") as gffout:
 		for line in gffin:
-			for item in list_pass:
-				if item in line:
-					print(line.strip(), file=gffout)
-				else:
-					pass
+			if not line.strip():
+				pass
+			else:
+				for item in list_pass:
+					if item in line:
+						print(line.strip(), file=gffout)
+					else:
+						pass
 
 def gene_model_selection():
 	print("Selecting best gene models")
@@ -174,35 +192,41 @@ def gene_model_selection():
 	IDlist = []
 	with open("compare_seq-filter.tracking","r") as inputfile:
 		for line in inputfile:
-			line = line.strip().replace("|","	")
-			if line.split()[1] not in dicloci:
-				dicloci[line.split()[1]] = line
+			if not line.strip():
+				pass
 			else:
-				if "TCONS" in dicloci[line.split()[1]].split()[2]:
-					if "TCONS" in line.split()[2]:
-						if int(dicloci[line.split()[1]].split()[11]) >= int(line.split()[11]):
-							pass
-						else:
-							dicloci[line.split()[1]] = line
-					else:
-						pass
+				line = line.strip().replace("|","	")
+				if line.split()[1] not in dicloci:
+					dicloci[line.split()[1]] = line
 				else:
-					if "TCONS" in line.split()[2]:
-						dicloci[line.split()[1]] = line
-					else:
-						if int(dicloci[line.split()[1]].split()[11]) >= int(line.split()[11]):
-							pass
+					if "TCONS" in dicloci[line.split()[1]].split()[2]:
+						if "TCONS" in line.split()[2]:
+							if int(dicloci[line.split()[1]].split()[11]) >= int(line.split()[11]):
+								pass
+							else:
+								dicloci[line.split()[1]] = line
 						else:
+							pass
+					else:
+						if "TCONS" in line.split()[2]:
 							dicloci[line.split()[1]] = line
+						else:
+							if int(dicloci[line.split()[1]].split()[11]) >= int(line.split()[11]):
+								pass
+							else:
+								dicloci[line.split()[1]] = line
 	for item in dicloci:
 		IDlist.append(dicloci[item].split()[2])
 	with open("PredictedPass_seq-filter-2.gff3", "r") as gffin, open("PredictedPass_multifiltered.gff3", "w") as gffout:
 		for line in gffin:
-			for item in IDlist:
-				if item in line:
-					print(line.strip(), file=gffout)
-				else:
-					pass
+			if not line.strip():
+				pass
+			else:
+				for item in IDlist:
+					if item in line:
+						print(line.strip(), file=gffout)
+					else:
+						pass
 
 def exonerate(refine_exo):
 	print("Executing Exonerate")
@@ -236,9 +260,12 @@ def create_output():
 	genelist = []
 	with open("EXO_compare.loci", "r") as infile:
 		for line in infile:
-			line = line.strip().split()
-			if line[3] == "-" and line[4] != "-":
-				genelist.append(line[4])
+			if not line.strip():
+				pass
+			else:
+				line = line.strip().split()
+				if line[3] == "-" and line[4] != "-":
+					genelist.append(line[4])
 	with open("PredictedPass_multifiltered.gff3","r") as predgff ,open("exonerate.gff3","r") as exogff, open("Final_annotation.gff3", "w") as finalgff:
 		for line in predgff:
 			if not line.strip():
@@ -246,14 +273,17 @@ def create_output():
 			else:
 				print(line.strip(), file=finalgff)
 		for line in exogff:
-			for item in genelist:
-				if item in line:
-					print(line.strip(), file=finalgff)
-				else:
-					pass
+			if not line.strip():
+				pass
+			else:
+				for item in genelist:
+					if item.split(",")[0] in line:
+						print(line.strip(), file=finalgff)
+					else:
+						pass
 
 def main():
-	print("C3Q pipeline version 1.0 (September 2020)")
+	print("C3Q pipeline version 1.1 (September 2020)")
 	initdir = os.getcwd()
 	inputargs = input_args()
 	if inputargs.o is None:
