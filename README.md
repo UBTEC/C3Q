@@ -12,8 +12,8 @@ The C3Q pipeline was used to gene prediction in *C. deuterogattii* R265. The sel
 
 **Application of an optimized annotation pipeline to the _Cryptococcus deuterogattii_ genome reveals dynamic primary metabolic gene clusters and genomic impact of RNAi loss**  
 Patricia A. G. Ferrareze, Corinne Maufrais, Rodrigo Silva Araujo Streit, Shelby J. Priest, Christina A. Cuomo, Joseph Heitman, Charley C. Staats, Guilhem Janbon  
-bioRxiv 2020.09.01.278374  
-https://doi.org/10.1101/2020.09.01.278374  
+G3 Genes|Genomes|Genetics, Volume 11, Issue 2, February 2021, jkaa070 
+https://doi.org/10.1093/g3journal/jkaa070
 <br />
 ### How does C3Q pipeline works?  
 The C3Q pipeline performs the gene prediction using RNA-Seq alignment (.bam) and genome (.fna/.fa) files. The addition of a protein file of sequences from close species (.faa/.fa) is optional but recomended.  
